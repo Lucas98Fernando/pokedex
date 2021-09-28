@@ -29,9 +29,9 @@ import Vue from "vue";
 export default Vue.extend({
   name: "Pokemon",
   props: {
-    num: Number,
-    name: String,
-    url: String,
+    num: { type: Number, required: false },
+    name: { type: String, required: false },
+    url: { type: String, required: false },
   },
   data() {
     return {
