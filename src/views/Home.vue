@@ -1,18 +1,30 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <div :key="i" v-for="(poke, i) in pokemons">
+      <Pokemon :name="poke.name" :url="poke.url" :num="i + 1" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import axios from "axios";
+import Pokemon from "@/components/Pokemon.vue";
 
 export default Vue.extend({
   name: "Home",
-  components: {
-    HelloWorld,
+  components: { Pokemon },
+  data() {
+    return {
+      pokemons: [],
+    };
+  },
+  created() {
+    axios.get("https://pokeapi.co/api/v2/pokemon?limit=151").then((resp) => {
+      this.pokemons = resp.data.results;
+      console.log(resp.data.results);
+    });
   },
 });
 </script>
