@@ -3,19 +3,26 @@
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
-          <img :src="pokemon.frontImage" alt="Placeholder image" />
+          <img
+            class="img-pokemon"
+            :src="pokemon.frontImage"
+            :alt="pokemon.name"
+          />
         </figure>
       </div>
       <div class="card-content">
         <div class="content">
           <p>N° {{ num }}</p>
-          <p class="title is-4">{{ name | upperCaseFirstLetter }}</p>
-          <b-button
-            label="Ver detalhes"
-            type="is-primary"
-            icon-right="link"
-            @click="modalActive = true"
-          />
+          <p class="title is-3">{{ name | upperCaseFirstLetter }}</p>
+          <div class="row-types">
+            <p :key="i" v-for="(type, i) in pokemon.types">
+              {{ type.name | upperCaseFirstLetter }}
+            </p>
+          </div>
+          <button class="button is-primary" @click="modalActive = true">
+            Ver detalhes
+            <i class="fas fa-location-arrow pl-2"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -40,17 +47,22 @@ export default Vue.extend({
     return {
       modalActive: false,
       pokemon: {
-        type: "",
+        types: [],
         frontImage: "",
         backImage: "",
       },
     };
   },
-  created() {
+  async created() {
     axios.get(this.url).then((res) => {
-      this.pokemon.type = res.data.types[0].type.name;
       this.pokemon.frontImage = res.data.sprites.front_default;
       this.pokemon.backImage = res.data.sprites.back_default;
+
+      res.data.types.forEach((data: any) => {
+        this.$data.pokemon.types.push({
+          name: data.type.name,
+        });
+      });
       console.log(res.data);
     });
   },
@@ -66,5 +78,20 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .card {
   border-radius: 15px;
+
+  .img-pokemon {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+
+  .row-types {
+    display: flex;
+
+    p {
+      margin: 0 1rem 1rem 0;
+    }
+  }
 }
 </style>

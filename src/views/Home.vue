@@ -31,7 +31,7 @@ export default Vue.extend({
   created() {
     axios.get("https://pokeapi.co/api/v2/pokemon?limit=151").then((resp) => {
       this.pokemons = resp.data.results;
-      console.log(resp.data.results);
+      // console.log(resp.data.results);
     });
   },
 });
