@@ -1,9 +1,14 @@
 <template>
   <div class="container">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <Logo />
     <div class="columns is-multiline">
       <div class="column is-one-third" :key="i" v-for="(poke, i) in pokemons">
-        <Pokemon :name="poke.name" :url="poke.url" :num="i + 1" />
+        <Pokemon
+          :pokemonData="poke"
+          :name="poke.name"
+          :url="poke.url"
+          :num="i + 1"
+        />
       </div>
     </div>
   </div>
@@ -12,11 +17,12 @@
 <script lang="ts">
 import Vue from "vue";
 import axios from "axios";
+import Logo from "@/components/Logo.vue";
 import Pokemon from "@/components/Pokemon.vue";
 
 export default Vue.extend({
   name: "Home",
-  components: { Pokemon },
+  components: { Logo, Pokemon },
   data() {
     return {
       pokemons: [],
