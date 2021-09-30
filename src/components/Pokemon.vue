@@ -3,11 +3,7 @@
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
-          <img
-            class="img-pokemon"
-            :src="pokemon.frontImage"
-            :alt="pokemon.name"
-          />
+          <img class="img-pokemon" :src="pokemon.frontImage" :alt="name" />
         </figure>
       </div>
       <div class="card-content">
@@ -27,7 +23,12 @@
       </div>
     </div>
     <b-modal v-model="modalActive">
-      <div class="card">{{ pokemon }}</div>
+      <div class="card py-4">
+        <div class="has-text-centered">
+          <h3 class="is-size-3">{{ name | upperCaseFirstLetter }}</h3>
+        </div>
+        <Carousel :carousels="carousels" />
+      </div>
     </b-modal>
   </div>
 </template>
@@ -35,9 +36,11 @@
 <script lang="ts">
 import Vue from "vue";
 import axios from "axios";
+import Carousel from "@/components/Carousel.vue";
 
 export default Vue.extend({
   name: "Pokemon",
+  components: { Carousel },
   props: {
     num: { type: Number, required: false },
     name: { type: String, required: false },
@@ -51,6 +54,7 @@ export default Vue.extend({
         frontImage: "",
         backImage: "",
       },
+      carousels: [],
     };
   },
   async created() {
@@ -63,7 +67,15 @@ export default Vue.extend({
           name: data.type.name,
         });
       });
-      console.log(res.data);
+
+      // Todos os spites do pokémon
+      const allSprites = res.data.sprites;
+      // Pegando somente os valores do objeto dos spites e removendo os valores nulo
+      const spritesValues = Object.values(allSprites).filter((n) => n);
+      // Inserindo no array do carousel somente as URL's dos sprites
+      this.$data.carousels = spritesValues;
+      console.log(this.carousels);
+      // console.log(res.data);
     });
   },
   filters: {
@@ -78,6 +90,8 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .card {
   border-radius: 15px;
+  max-width: 500px;
+  margin: 0 auto;
 
   .img-pokemon {
     image-rendering: -moz-crisp-edges;
