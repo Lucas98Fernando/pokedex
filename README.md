@@ -1,4 +1,6 @@
-# pokedex
+# Pokédex
+
+- Pokédex consumindo a API do PokéAPI
 
 ## Project setup
 ```
