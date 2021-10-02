@@ -12,6 +12,11 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  background-color: #eaeaea;
+  background: rgb(102, 155, 188);
+  background: radial-gradient(
+    circle,
+    rgba(102, 155, 188, 1) 0%,
+    rgba(255, 77, 109, 1) 100%
+  );
 }
 </style>

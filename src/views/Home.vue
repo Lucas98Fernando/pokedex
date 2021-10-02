@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <Logo />
-    <b-field message="Encontre o seu pokémon preferido">
+    <b-field
+      message="Encontre o seu pokémon preferido"
+      class="has-text-white mb-4"
+    >
       <b-input
         v-model="search"
         placeholder="Pesquisar um pokémon..."
@@ -13,7 +16,7 @@
         <b-button
           id="searchBtn"
           label="Pesquisar"
-          type="is-primary"
+          type="is-warning"
           rounded
           @click="searchPokemons()"
         />
