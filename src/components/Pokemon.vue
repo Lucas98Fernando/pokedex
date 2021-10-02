@@ -11,9 +11,41 @@
           <p>N° {{ num }}</p>
           <p class="title is-3">{{ name | upperCaseFirstLetter }}</p>
           <div class="row-types">
-            <p :key="i" v-for="(type, i) in pokemon.types">
+            <b-tag
+              :key="i"
+              v-for="(type, i) in pokemon.types"
+              size="is-medium"
+              class="mr-1"
+              :class="
+                type.name == 'grass'
+                  ? 'is-success'
+                  : type.name == 'poison'
+                  ? 'is-primary'
+                  : type.name == 'fire'
+                  ? 'is-danger'
+                  : type.name == 'electric'
+                  ? 'is-warning'
+                  : type.name == 'water'
+                  ? 'is-info'
+                  : type.name == 'ground'
+                  ? 'is-brown'
+                  : type.name == 'flying'
+                  ? 'is-blue-light'
+                  : type.name == 'fairy'
+                  ? 'is-pink'
+                  : type.name == 'rock'
+                  ? 'is-brown-light'
+                  : type.name == 'psychic'
+                  ? 'is-purple-light'
+                  : type.name == 'fighting'
+                  ? 'is-orange'
+                  : type.name == 'ghost'
+                  ? 'is-dark'
+                  : ''
+              "
+            >
               {{ type.name | upperCaseFirstLetter }}
-            </p>
+            </b-tag>
           </div>
           <!-- <button class="button is-primary" @click="modalActive = true">
             Ver detalhes
@@ -145,6 +177,35 @@ export default Vue.extend({
     p {
       margin: 0 1rem 1rem 0;
     }
+  }
+
+  .tag.is-brown {
+    background-color: #7f5539;
+    color: #fff;
+  }
+
+  .tag.is-blue-light {
+    background-color: #ade8f4;
+  }
+
+  .tag.is-pink {
+    background-color: #ff87ab;
+    color: #fff;
+  }
+
+  .tag.is-brown-light {
+    background-color: #a37c40;
+    color: #fff;
+  }
+
+  .tag.is-purple-light {
+    background-color: #cdb4db;
+    color: #222;
+  }
+
+  .tag.is-orange {
+    background-color: #f48c06;
+    color: #fff;
   }
 }
 </style>
