@@ -12,6 +12,7 @@ export default {
 
 <style lang="scss" scoped>
 #app {
+  overflow-x: hidden;
   background: rgb(102, 155, 188);
   background: radial-gradient(
     circle,
