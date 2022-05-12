@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card">
-      <div class="card-image" @mouseenter="toggleImg()" @mouseout="toggleImg()">
+      <div class="card-image">
         <figure class="image is-4by3">
           <img class="img-pokemon" :src="currentImg" :alt="name" />
         </figure>
@@ -69,7 +69,6 @@
 import Vue from "vue";
 import axios from "axios";
 // import Carousel from "@/components/Carousel.vue";
-
 export default Vue.extend({
   name: "Pokemon",
   components: {
@@ -88,16 +87,17 @@ export default Vue.extend({
       pokemon: {
         types: [],
         frontImage: "",
-        backImage: "",
+        // backImage: "",
       },
       // colorText: "",
-      carousels: [],
+      // carousels: [],
     };
   },
   async created() {
     axios.get(this.url).then((res) => {
-      this.pokemon.frontImage = res.data.sprites.front_default;
-      this.pokemon.backImage = res.data.sprites.back_default;
+      this.pokemon.frontImage =
+        res.data.sprites.other.dream_world.front_default;
+      // this.pokemon.backImage = res.data.sprites.back_default;
       this.currentImg = this.pokemon.frontImage;
 
       res.data.types.forEach((data: any) => {
@@ -130,7 +130,7 @@ export default Vue.extend({
     console.log(this.pokemon.types);
   },
   filters: {
-    upperCaseFirstLetter: (value: string) => {
+    upperCaseFirstLetter(value: string) {
       let nameFormatted = value[0].toUpperCase() + value.slice(1);
       return nameFormatted;
     },
@@ -139,7 +139,7 @@ export default Vue.extend({
     toggleImg() {
       if (this.isFront) {
         this.isFront = false;
-        this.currentImg = this.pokemon.backImage;
+        // this.currentImg = this.pokemon.backImage;
       } else {
         this.isFront = true;
         this.currentImg = this.pokemon.frontImage;
@@ -154,55 +154,45 @@ export default Vue.extend({
   border-radius: 15px;
   max-width: 500px;
   margin: 0 auto;
+  padding: 1.5rem 0 0 0;
   transition: 0.3s ease-in-out;
-
   &:hover {
     transform: scale(1.05);
   }
-
-  .card-image {
-    cursor: pointer;
-  }
-
-  .img-pokemon {
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-  }
-
+  // .card-image {
+  //   cursor: pointer;
+  // }
+  // .img-pokemon {
+  //   image-rendering: -moz-crisp-edges;
+  //   image-rendering: -webkit-crisp-edges;
+  //   image-rendering: pixelated;
+  //   image-rendering: crisp-edges;
+  // }
   .row-types {
     display: flex;
-
     p {
       margin: 0 1rem 1rem 0;
     }
   }
-
   .tag.is-brown {
     background-color: #7f5539;
     color: #fff;
   }
-
   .tag.is-blue-light {
     background-color: #ade8f4;
   }
-
   .tag.is-pink {
     background-color: #ff87ab;
     color: #fff;
   }
-
   .tag.is-brown-light {
     background-color: #a37c40;
     color: #fff;
   }
-
   .tag.is-purple-light {
     background-color: #cdb4db;
     color: #222;
   }
-
   .tag.is-orange {
     background-color: #f48c06;
     color: #fff;
